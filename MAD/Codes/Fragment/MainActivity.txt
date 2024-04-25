@@ -1,0 +1,54 @@
+package com.example.exp7;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity  {
+    Button home, about, updates;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        home = findViewById(R.id.home);
+        about = findViewById(R.id.about);
+        updates = findViewById(R.id.updates);
+
+        loadFrag(new fragHome(), false);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFrag(new fragHome(), true);
+            }
+        });
+        updates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFrag(new fragUpdate(), true);
+            }
+        });
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFrag(new fragAbout(), true);
+            }
+        });
+    }
+
+    void loadFrag(Fragment fragment, boolean flag){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if(flag) {
+            ft.replace(R.id.dummy, fragment);
+        }
+        else{
+            ft.add(R.id.dummy, fragment);
+        }
+        ft.commit();
+    }
+}
